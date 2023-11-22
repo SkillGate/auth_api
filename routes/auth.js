@@ -3,9 +3,6 @@ const User = require("../models/User");
 const CryptoJS = require("crypto-js");
 const jwt = require("jsonwebtoken");
 
-const PASS_SEC = "SkillGate";
-const JWT_SEC = "SkillGate";
-
 //REGISTER
 router.post("/register", async (req, res) => {
   const newUser = new User({
@@ -19,11 +16,11 @@ router.post("/register", async (req, res) => {
     isActivated: req.body.isActivated,
     password: CryptoJS.AES.encrypt(
       req.body.password,
-      "SkillGate"
+      process.env.PASS_SEC
     ).toString(),
     confirmPassword: CryptoJS.AES.encrypt(
       req.body.confirmPassword,
-      "SkillGate"
+      process.env.PASS_SEC
     ).toString(),
   });
 
@@ -47,7 +44,7 @@ router.post("/login", async (req, res) => {
 
     const hashedPassword = CryptoJS.AES.decrypt(
       user.password,
-      PASS_SEC
+      process.env.PASS_SEC
     );
 
     const originalPassword = hashedPassword.toString(CryptoJS.enc.Utf8);
@@ -61,11 +58,11 @@ router.post("/login", async (req, res) => {
         id: user._id,
         isAdmin: user.isAdmin,
       },
-      JWT_SEC,
+      process.env.JWT_SEC,
       { expiresIn: "3d" }
     );
 
-    const { password, ...others } = user._doc;
+    const { password, confirmPassword, ...others } = user._doc;
     res.status(200).json({ ...others, accessToken });
   } catch (err) {
     res.status(500).json(err);

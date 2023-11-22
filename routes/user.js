@@ -9,7 +9,7 @@ const router = require("express").Router();
 const CryptoJS = require("crypto-js");
 
 //UPDATE
-router.put("/:id", async (req, res) => {
+router.put("/:id", verifyToken, async (req, res) => {
   if (req.body.password) {
     req.body.password = CryptoJS.AES.encrypt(
       req.body.password,
@@ -32,7 +32,7 @@ router.put("/:id", async (req, res) => {
 });
 
 //DELETE
-router.delete("/:id", verifyTokenAndAuthorization, async (req, res) => {
+router.delete("/:id", verifyToken, async (req, res) => {
   try {
     await User.findByIdAndDelete(req.params.id);
     res.status(200).json("User has been deleted...");
@@ -42,7 +42,7 @@ router.delete("/:id", verifyTokenAndAuthorization, async (req, res) => {
 });
 
 //GET USER
-router.get("/find/:id", verifyTokenAndAuthorization, async (req, res) => {
+router.get("/find/:id", verifyToken, async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
     const { password, ...others } = user._doc;
@@ -53,7 +53,7 @@ router.get("/find/:id", verifyTokenAndAuthorization, async (req, res) => {
 });
 
 //GET ALL USER
-router.get("/", verifyTokenAndAuthorization, async (req, res) => {
+router.get("/", verifyToken, async (req, res) => {
   const query = req.query.new;
   try {
     const users = query
@@ -65,7 +65,7 @@ router.get("/", verifyTokenAndAuthorization, async (req, res) => {
   }
 });
 
-router.post("/email", verifyTokenAndAuthorization, async (req, res) => {
+router.post("/email", verifyToken, async (req, res) => {
   console.log(req.body.email);
   try {
     const user = await User.find({ email: req.body.email });
@@ -78,7 +78,7 @@ router.post("/email", verifyTokenAndAuthorization, async (req, res) => {
 });
 
 //GET USER STATS
-router.get("/stats", verifyTokenAndAuthorization, async (req, res) => {
+router.get("/stats", verifyToken, async (req, res) => {
   const date = new Date();
   const lastYear = new Date(date.setFullYear(date.getFullYear() - 1));
 
