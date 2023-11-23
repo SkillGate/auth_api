@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const userRoute = require("./routes/user");
 const authRoute = require("./routes/auth");
+const healthRoute = require("./routes/health");
 const cors = require("cors");
 
 dotenv.config();
@@ -42,6 +43,7 @@ app.use((req, res, next) => {
 });
 
 app.use(express.json());
+app.use("/api/v1/health", healthRoute);
 app.use("/api/v1/auth", authRoute);
 app.use("/api/v1/user", userRoute);
 
