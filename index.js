@@ -50,7 +50,3 @@ app.use("/api/v1/user", userRoute);
 app.listen(process.env.PORT || 5000, () => {
   console.log("Backend server is running!");
 });
-
-// app.listen(5005, () => {
-//   console.log("Backend user server is running!");
-// });
