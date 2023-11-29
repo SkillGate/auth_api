@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 
+const userTypes = ["Candidate", "Employer"];
+
 const UserSchema = new mongoose.Schema(
   {
     firstName: { type: String, required: true },
@@ -41,6 +43,11 @@ const UserSchema = new mongoose.Schema(
     },
     overview: {
       type: String,
+    },
+    userType: {
+      type: String,
+      enum: userTypes,
+      default: "Candidate",
     },
     isAdmin: {
       type: Boolean,
