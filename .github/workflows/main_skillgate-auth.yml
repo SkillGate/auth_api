@@ -13,10 +13,6 @@ env:
   AZURE_WEBAPP_NAME: 'skillgate-auth'   # set this to your application's name
   AZURE_WEBAPP_PACKAGE_PATH: '.'      # set this to the path to your web app project, defaults to the repository root
   NODE_VERSION: '18.x'
-  PORT: '5000'
-  MONGO_URL: 'mongodb+srv://skillgate-new:orVU8pLVs52ssetJ@cluster0.rlgaqhu.mongodb.net/?retryWrites=true&w=majority'
-  JWT_SEC: 'skillgate'
-  PASS_SEC: 'skillgate'
 
 jobs:
   build:
