@@ -40,7 +40,9 @@ router.post("/login", async (req, res) => {
       email: req.body.email,
     });
 
-    !user && res.status(401).json("Email is not valid!");
+    if (!user) {
+      return res.status(401).json("Email is not valid!");
+    }
 
     const hashedPassword = CryptoJS.AES.decrypt(
       user.password,
@@ -51,7 +53,9 @@ router.post("/login", async (req, res) => {
 
     const inputPassword = req.body.password;
 
-    originalPassword != inputPassword && res.status(401).json("Wrong Password");
+    if (originalPassword !== inputPassword) {
+      return res.status(402).json("Wrong Password");
+    }
 
     const accessToken = jwt.sign(
       {
