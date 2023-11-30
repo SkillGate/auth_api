@@ -9,15 +9,6 @@ on:
       - main
   workflow_dispatch:
 
-env:
-  AZURE_WEBAPP_NAME: 'skillgate-auth'   # set this to your application's name
-  AZURE_WEBAPP_PACKAGE_PATH: '.'      # set this to the path to your web app project, defaults to the repository root
-  NODE_VERSION: '18.x'
-  PORT: '5000'
-  MONGO_URL: 'mongodb+srv://skillgate-new:orVU8pLVs52ssetJ@cluster0.rlgaqhu.mongodb.net/?retryWrites=true&w=majority'
-  JWT_SEC: 'skillgate'
-  PASS_SEC: 'skillgate'
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -28,7 +19,7 @@ jobs:
       - name: Set up Node.js version
         uses: actions/setup-node@v3
         with:
-          node-version: ${{ env.NODE_VERSION }}
+          node-version: '18.x'
 
       - name: npm install, build, and test
         run: |
@@ -65,7 +56,7 @@ jobs:
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
-          app-name: ${{ env.AZURE_WEBAPP_NAME }}
+          app-name: 'skillgate-auth'
           slot-name: 'Production'
-          package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_EB0D98F1CEFA4619901DAD6443A6AECA }}
+          package: .
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_75BE2FCA0BE94FE09217FC14DC9B243C }}
