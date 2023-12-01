@@ -22,6 +22,7 @@ router.post("/register", async (req, res) => {
     isAdmin: req.body.isAdmin || false,
     isActivated: req.body.isActivated || true,
     skills: req.body.skills || [],
+    userType: req.body.userType || 'Candidate',
     password: CryptoJS.AES.encrypt(
       req.body.password,
       process.env.PASS_SEC
