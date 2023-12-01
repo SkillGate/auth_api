@@ -17,6 +17,7 @@ router.post("/register", async (req, res) => {
     email: req.body.email,
     phone: req.body.phone,
     address: req.body.address,
+    companyName: req.body.companyName || '',
     dateOfBirth: req.body.dateOfBirth,
     isAdmin: req.body.isAdmin || false,
     isActivated: req.body.isActivated || true,
