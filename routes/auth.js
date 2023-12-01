@@ -5,19 +5,27 @@ const jwt = require("jsonwebtoken");
 
 //REGISTER
 router.post("/register", async (req, res) => {
+  if (req.body.password !== req.body.confirmPassword) {
+    return res
+      .status(400)
+      .json({ error: "Password and Confirm Password do not match" });
+  }
+
   const newUser = new User({
     firstName: req.body.firstName,
     lastName: req.body.lastName,
     email: req.body.email,
-    phoneNo: req.body.phoneNo,
+    phone: req.body.phone,
     address: req.body.address,
     dateOfBirth: req.body.dateOfBirth,
-    isAdmin: req.body.isAdmin,
-    isActivated: req.body.isActivated,
+    isAdmin: req.body.isAdmin || false,
+    isActivated: req.body.isActivated || true,
+    skills: req.body.skills || [],
     password: CryptoJS.AES.encrypt(
       req.body.password,
       process.env.PASS_SEC
     ).toString(),
+    // Assuming your schema has "password" and "confirmPassword" fields
     confirmPassword: CryptoJS.AES.encrypt(
       req.body.confirmPassword,
       process.env.PASS_SEC
