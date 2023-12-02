@@ -21,10 +21,13 @@ mongoose
 
 var corsOptions = {
   origin: [
-    "https://skillgate.github.io/Web",
+    "https://skillgate.github.io",
     "http://localhost:3000",
     "https://fluffy-sopapillas-e80ba6.netlify.app",
   ],
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  credentials: true,
+  optionsSuccessStatus: 204,
 };
 
 app.use(cors(corsOptions));
