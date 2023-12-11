@@ -1,8 +1,6 @@
 const User = require("../models/User");
 const {
-  verifyToken,
-  verifyTokenAndAuthorization,
-  verifyTokenAndAdmin,
+  verifyToken
 } = require("./verifyToken");
 
 const router = require("express").Router();
@@ -69,8 +67,6 @@ router.post("/email", verifyToken, async (req, res) => {
   console.log(req.body.email);
   try {
     const user = await User.find({ email: req.body.email });
-    // console.log(user);
-    // const { password, ...others } = user._doc;
     res.status(200).json(user);
   } catch (err) {
     res.status(500).json(err);

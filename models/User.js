@@ -1,6 +1,16 @@
 const mongoose = require("mongoose");
 
 const userTypes = ["Candidate", "Employer"];
+const employmentTypes = [
+  "Full-time",
+  "Part-time",
+  "Self-employed",
+  "Freelance",
+  "Contract",
+  "Internship",
+  "Apprenticeship",
+  "Seasonal",
+];
 
 const UserSchema = new mongoose.Schema(
   {
@@ -12,39 +22,83 @@ const UserSchema = new mongoose.Schema(
     address: { type: String },
     companyName: { type: String },
     dateOfBirth: { type: Date },
-    role: {
-      type: String,
-    },
-    skills: {
-      type: [String],
-    },
-    portfolio: {
-      type: String,
-    },
-    experience: {
-      type: String,
-    },
-    avatar: {
-      type: String,
-    },
-    hourly_rate: {
-      type: Number,
-    },
-    level: {
-      type: String,
-    },
-    availability: {
-      type: String,
-    },
-    location: {
-      type: String,
-    },
-    num_of_connections: {
-      type: Number,
-    },
-    overview: {
-      type: String,
-    },
+    linkedIn: { type: String },
+    gitHub: { type: String },
+    blog: { type: String },
+    role: { type: String },
+    skills: { type: [String] },
+    portfolio: { type: String },
+    biography: { type: String },
+    experience: [
+      {
+        companyName: { type: String },
+        jobRole: { type: String },
+        employmentType: {
+          type: String,
+          enum: employmentTypes,
+          default: "Full-time",
+        },
+        location: { type: String },
+        startYear: { type: String },
+        startMonth: { type: String },
+        endYear: { type: String },
+        endMonth: { type: String },
+        skills: { type: [String] },
+        workDone: { type: String },
+      },
+    ],
+    education: [
+      {
+        universityName: { type: String },
+        degreeName: { type: String },
+        classOfDegree: { type: String },
+        startYear: { type: String },
+        startMonth: { type: String },
+        endYear: { type: String },
+        endMonth: { type: String },
+      },
+    ],
+    projects: [
+      {
+        projectName: { type: String },
+        projectDomain: { type: String },
+        projectOverview: { type: String },
+        startYear: { type: String },
+        startMonth: { type: String },
+        endYear: { type: String },
+        endMonth: { type: String },
+        skills: { type: [String] },
+        contribution: { type: String },
+        gitHubLink: { type: String },
+      },
+    ],
+    awards: [
+      {
+        awardName: { type: String },
+        organizationName: { type: String },
+        placeDescription: { type: String },
+        year: { type: String },
+        month: { type: String },
+      },
+    ],
+    volunteering: [
+      {
+        organizationName: { type: String },
+        position: { type: String },
+        eventName: { type: String },
+        startYear: { type: String },
+        startMonth: { type: String },
+        endYear: { type: String },
+        endMonth: { type: String },
+      },
+    ],
+    avatar: { type: String },
+    hourly_rate: { type: Number },
+    level: { type: String },
+    availability: { type: String },
+    location: { type: String },
+    num_of_connections: { type: Number },
+    overview: { type: String },
     userType: {
       type: String,
       enum: userTypes,
