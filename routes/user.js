@@ -8,6 +8,10 @@ const CryptoJS = require("crypto-js");
 
 //UPDATE
 router.put("/:id", verifyToken, async (req, res) => {
+  if (!req.params.id) {
+    return res.status(400).json({ error: "ID is required" });
+  }
+
   if (req.body.password) {
     req.body.password = CryptoJS.AES.encrypt(
       req.body.password,
@@ -23,6 +27,11 @@ router.put("/:id", verifyToken, async (req, res) => {
       },
       { new: true }
     );
+
+    if (!updatedUser || (Array.isArray(updatedUser) && updatedUser.length === 0)) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
     res.status(200).json(updatedUser);
   } catch (err) {
     res.status(500).json(err);
@@ -31,6 +40,10 @@ router.put("/:id", verifyToken, async (req, res) => {
 
 //DELETE
 router.delete("/:id", verifyToken, async (req, res) => {
+  if (!req.params.id) {
+    return res.status(400).json({ error: "ID is required" });
+  }
+
   try {
     await User.findByIdAndDelete(req.params.id);
     res.status(200).json("User has been deleted...");
@@ -41,6 +54,10 @@ router.delete("/:id", verifyToken, async (req, res) => {
 
 //GET USER
 router.get("/find/:id", verifyToken, async (req, res) => {
+  if (!req.params.id) {
+    return res.status(400).json({ error: "ID is required" });
+  }
+  
   try {
     const user = await User.findById(req.params.id);
     const { password, ...others } = user._doc;
