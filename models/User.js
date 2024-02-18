@@ -45,6 +45,10 @@ const UserSchema = new mongoose.Schema(
         endMonth: { type: String },
         skills: { type: [String] },
         workDone: { type: String },
+        currentlyWorking: {
+          type: Boolean,
+          default: false,
+        },
       },
     ],
     education: [
